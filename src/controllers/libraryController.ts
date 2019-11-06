@@ -5,22 +5,32 @@ import { Request, Response } from 'restify';
 
 export class LibraryController implements Controller {
   public initialize(httpServer: HTTPServer): void {
-    httpServer.get('library', this.list.bind(this));
-    httpServer.get('library/:id', this.getByID.bind(this));
-    httpServer.post('library', this.create.bind(this));
-    httpServer.put('library/:id', this.update.bind(this));
-    httpServer.del('library/:id', this.delete.bind(this));
+    httpServer.get('/library/:id', this.getByID.bind(this));
+    httpServer.get('/library', this.list.bind(this));
+
+    httpServer.post('/library', this.create.bind(this));
+    httpServer.put('/library/:id', this.update.bind(this));
+    httpServer.del('/library/:id', this.delete.bind(this));
   }
 
   private async list(req: Request, res: Response): Promise<void> {
     res.send(await libraryService.list());
   }
 
-  private getByID(req: Request, res: Response): void {}
+  private async getByID(req: Request, res: Response): Promise<void> {
+    const library = await libraryService.getByID(req.params.id);
+    res.send(library ? 200 : 400, library);
+  }
 
-  private create(req: Request, res: Response): void {}
+  private async create(req: Request, res: Response): Promise<void> {
+    res.send(await libraryService.create(req.body));
+  }
 
-  private update(req: Request, res: Response): void {}
+  private update(req: Request, res: Response): void {
+    // TODO
+  }
 
-  private delete(req: Request, res: Response): void {}
+  private delete(req: Request, res: Response): void {
+    // TODO
+  }
 }

@@ -4,7 +4,7 @@ import { DatabaseProvider } from '../database';
 export class LibraryService {
   public async getByID(id: number): Promise<Library> {
     const connection = await DatabaseProvider.getConnection();
-    return await connection.getMongoRepository(Library).findOneOrFail(id);
+    return await connection.getMongoRepository(Library).findOne(id);
   }
 
   public async list(): Promise<Library[]> {
@@ -27,9 +27,14 @@ export class LibraryService {
     return await repo.save(entity);
   }
 
-  public async delete(id: number): Promise<void> {
+  public async delete(id: number): Promise<Library> {
     const connection = await DatabaseProvider.getConnection();
-    return await connection.getMongoRepository(Library).remove();
+    const repo = await connection.getMongoRepository(Library);
+    const entity = await connection
+      .getMongoRepository(Library)
+      .findOneOrFail(id);
+    entity.active = false;
+    return await repo.save(entity);
   }
 }
 

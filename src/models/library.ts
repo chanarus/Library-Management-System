@@ -7,4 +7,7 @@ export class Library {
 
   @Column()
   public name: string;
+
+  @Column()
+  public active: boolean;
 }

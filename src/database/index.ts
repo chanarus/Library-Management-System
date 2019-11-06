@@ -7,6 +7,7 @@ export interface DatabaseConfiguration {
   url: string;
   ssl?: boolean;
   authSource: string;
+  useUnifiedTopology: boolean;
 }
 
 export class DatabaseProvider {
@@ -27,7 +28,8 @@ export class DatabaseProvider {
       useNewUrlParser,
       url,
       ssl,
-      authSource
+      authSource,
+      useUnifiedTopology
     } = DatabaseProvider.configuration;
 
     DatabaseProvider.connection = await createConnection({
@@ -35,6 +37,7 @@ export class DatabaseProvider {
       useNewUrlParser,
       url,
       authSource,
+      useUnifiedTopology,
       extra: { ssl },
       entities: [Library],
       synchronize: true
@@ -42,12 +45,4 @@ export class DatabaseProvider {
 
     return DatabaseProvider.connection;
   }
-}
-
-{
-  type: 'mongodb';
-  useNewUrlParser: true;
-  url: 'mongodb+srv://chanaru:chanaru123@library-qw6rn.gcp.mongodb.net/library-db?retryWrites=true&w=majority';
-  ssl: true;
-  authSource: 'admin';
 }
