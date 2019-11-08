@@ -11,10 +11,15 @@ export class LibraryController implements Controller {
     httpServer.post('/library', this.create.bind(this));
     httpServer.put('/library/:id', this.update.bind(this));
     httpServer.del('/library/:id', this.delete.bind(this));
+    httpServer.get('/library/:id/staff', this.getStaff.bind(this));
   }
 
   private async list(req: Request, res: Response): Promise<void> {
     res.send(await libraryService.list());
+  }
+
+  private async getStaff(req: Request, res: Response): Promise<void> {
+    res.send(await libraryService.getStaff(req.params.id));
   }
 
   private async activeList(req: Request, res: Response): Promise<void> {
@@ -30,11 +35,13 @@ export class LibraryController implements Controller {
     res.send(await libraryService.create(req.body));
   }
 
-  private update(req: Request, res: Response): void {
-    // TODO
+  private async update(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    res.send(await libraryService.update(req.body, id));
   }
 
-  private delete(req: Request, res: Response): void {
-    // TODO
+  private async delete(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    res.send(await libraryService.delete(id));
   }
 }
