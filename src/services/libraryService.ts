@@ -12,6 +12,12 @@ export class LibraryService {
     return await connection.getMongoRepository(Library).find();
   }
 
+  public async activeList(): Promise<Library[]> {
+    const allLibs = await this.list();
+    const activeLibs = allLibs.filter(lib => lib.active === true);
+    return activeLibs;
+  }
+
   public async create(library: Library): Promise<Library> {
     const connection = await DatabaseProvider.getConnection();
     return await connection.getMongoRepository(Library).save(library);

@@ -10,4 +10,13 @@ export class Library {
 
   @Column()
   public active: boolean;
+
+  @Column()
+  public location: string;
+
+  @Column()
+  public address: string;
+
+  @Column()
+  public contactNo: string;
 }
