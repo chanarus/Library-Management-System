@@ -17,7 +17,7 @@
     "restify-cors-middleware": "^1.1.1",
     "rimraf": "^3.0.0",
     "ts-node": "^8.4.1",
-    "typeorm": "^0.2.20",
+    "typeorm": "^0.2.25",
     "typescript": "^3.6.4"
   },
   "devDependencies": {
